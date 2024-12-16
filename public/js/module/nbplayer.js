@@ -977,33 +977,33 @@ var nbPlayer = {
     };
 
       // Manejo específico para LG
-      if (Device.isLG || Device.isWEBOS) {
-        this.$player.pause();
+      // if (Device.isLG || Device.isWEBOS) {
+        //this.$player.pause();
         // Aplicar cambios y recargar
-        applyTrackChanges();
-        this.$player.load();
+        //applyTrackChanges();
+        //this.$player.load();
         // Esperar a que el video esté listo
-        this.$player.one('loadeddata', function() {
+        //this.$player.one('loadeddata', function() {
           // Restaurar posición y estado
-          self.$player.currentTime(currentTime);
-          if (wasPlaying) {
-            self.$player.play();
-          }
-        });
+          //self.$player.currentTime(currentTime);
+          //if (wasPlaying) {
+            //self.$player.play();
+          //}
+        //});
         // Manejar error de carga
-        this.$player.one('error', function(error) {
-          console.error('Error al cargar el video después de cambiar la pista:', error);
-        });
-      } else {
+        //this.$player.one('error', function(error) {
+          //console.error('Error al cargar el video después de cambiar la pista:', error);
+        //});
+      //} else {
         // Comportamiento normal para otros dispositivos
-        applyTrackChanges();
-        this.$player.one('loadeddata', function() {
-          self.$player.currentTime(currentTime);
-          if (wasPlaying) {
-            self.$player.play();
-          }
-        });
-      }
+        //applyTrackChanges();
+        //this.$player.one('loadeddata', function() {
+          //self.$player.currentTime(currentTime);
+          //if (wasPlaying) {
+            //self.$player.play();
+          //}
+        //});
+      //}
       $focused.find("i").removeClass("hidden");
   },
   setAudioByProperty: function (property, propertyValue) {
