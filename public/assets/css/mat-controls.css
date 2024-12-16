@@ -1,0 +1,94 @@
+.mat-controls {
+  position: absolute; top: 0; left: 0;
+  font-size: 2vw;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-controls-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 4em;
+}
+
+.mat-controls-row:first-child {
+  background-image: linear-gradient(rgb(0 0 0 / 75%), transparent);
+}
+
+.mat-controls-row:last-child, .mat-controls-row:nth-last-child(2) {
+  background: #00000045;
+  color: #FFF;
+}
+
+.mat-controls-item {
+  border: none;
+  position: relative;
+  height: fit-content;
+  /* border: 1px solid red; */
+}
+
+.mat-controls-right {
+  margin-left: auto;
+}
+
+.mat-controls-bottom {
+  margin-top: auto;
+}
+
+.mat-controls-item span:not(.nb-vjs-tooltip) {
+  color: #FFF;
+  font-size: 1.5em;
+  position:relative;
+  z-index:1;
+  background: radial-gradient(circle, #222324 69%, transparent 70%);
+  margin: 0.1em;
+}
+
+.mat-controls-item-control.focus span:not(.nb-vjs-tooltip) {
+  background: radial-gradient(circle, #cc3300 69%, transparent 70%);
+  outline: none!important;
+}
+
+.mat-controls-item-control.focus {
+  border: 0!important;
+  height: inherit;
+  margin: 0!important;
+  box-shadow: none!important;
+  transform: none!important;
+  outline: none!important;
+}
+
+/* .mat-controls-item .mat-controls-item-control:hover::before {
+  position: absolute;
+  top:0;
+  left:0;
+  content: " ";
+  width: 100%;
+  height: 100%;
+  background: rgb(255, 255, 255);
+  border-radius: 50%;
+} */
+
+.mat-controls-item .nb-vjs-tooltip {
+  position: absolute;
+  bottom: -80%;
+  color: white;
+  left: 0;
+  font-size: 0.8em;
+}
+
+.material-icons-round {
+  padding: 0.2em;
+}
+
+.nb-vjs-track-item.focus {
+  background: #cc3300!important;
+  outline: none;
+}
+
+.nb-vjs-vod-time {
+  padding: 0.6em;
+}
