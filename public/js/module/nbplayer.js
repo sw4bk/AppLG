@@ -524,9 +524,9 @@ var nbPlayer = {
 
     this.$player.off('loadedmetadata');
     this.$player.on('loadedmetadata', function () {
-      self.playerLoadedMetadata();
-      // if (!self.isLG) {
-      // }
+      if (!self.isLG) {
+        self.playerLoadedMetadata();
+      }
     });
 
     this.$player.off('loadeddata');
@@ -939,73 +939,49 @@ var nbPlayer = {
   selectTrack: function ($focused) {
     var id = $focused.data("id");
     var self = this;
-    var currentTime = this.$player.currentTime();
-    var wasPlaying = !this.$player.paused();
 
-    // Función para aplicar los cambios de track
-    const applyTrackChanges = function() {
-      if ($focused.hasClass("nb-vjs-track-subtitle")) {
-        //tracks.forEach(function (track, index) { if (track.mode == "showing") { track.mode = "hidden"; } })
-        User.setPlayerSubtitleLang(null);
-        self.$player.textTracks().tracks_.forEach(function (track, index) {
-          if (track.id == id && id != "-1") {
-            self.$player.textTracks().tracks_[index].mode = "showing";
-            //label saved instead of language because sometimes it brings several tracks with
-            //the same language but different labels, and Id also because sometimes it changes (especially text tracks)
-            self.updateChannelTrack(User.propChannelSubtitles, track.label);
-          } else {
-            self.$player.textTracks().tracks_[index].mode = "hidden";
-          }
-        });
-          self.$vodTracksDiv.find(".nb-vjs-track-subtitle").find("i").addClass("hidden");
-      } else {
-        //this.$player.audioTracks().tracks_.forEach(function (track, index) { if (track.enabled == true) { track.mode = false; } })
-        //this.$player.audioTracks().tracks_[index].enabled = true;
-        User.setPlayerAudioLang(null);
-        self.$player.audioTracks().tracks_.forEach(function (track, index) {
-          if (track.id == id) {
-            self.$player.audioTracks().tracks_[index].enabled = true;
-            //label saved instead of language because sometimes it brings several tracks with
-            //the same language but different labels, and Id also because sometimes it changes (especially text tracks)
-            self.updateChannelTrack(User.propChannelAudio, track.label);
-          } else {
-            self.$player.audioTracks().tracks_[index].enabled = false;
-          }
-        });
-        self.$vodTracksDiv.find(".nb-vjs-track-audio").find("i").addClass("hidden");
-      }
-    };
+    if ($focused.hasClass("nb-vjs-track-subtitle")) {
+      //tracks.forEach(function (track, index) { if (track.mode == "showing") { track.mode = "hidden"; } })
+      User.setPlayerSubtitleLang(null);
+      this.$player.textTracks().tracks_.forEach(function (track, index) {
+        if (track.id == id && id != "-1") {
+          self.$player.textTracks().tracks_[index].mode = "showing";
 
-      // Manejo específico para LG
-      // if (Device.isLG || Device.isWEBOS) {
-        //this.$player.pause();
-        // Aplicar cambios y recargar
-        //applyTrackChanges();
-        //this.$player.load();
-        // Esperar a que el video esté listo
-        //this.$player.one('loadeddata', function() {
-          // Restaurar posición y estado
-          //self.$player.currentTime(currentTime);
-          //if (wasPlaying) {
-            //self.$player.play();
-          //}
-        //});
-        // Manejar error de carga
-        //this.$player.one('error', function(error) {
-          //console.error('Error al cargar el video después de cambiar la pista:', error);
-        //});
-      //} else {
-        // Comportamiento normal para otros dispositivos
-        //applyTrackChanges();
-        //this.$player.one('loadeddata', function() {
-          //self.$player.currentTime(currentTime);
-          //if (wasPlaying) {
-            //self.$player.play();
-          //}
-        //});
-      //}
-      $focused.find("i").removeClass("hidden");
+          //label saved instead of language because sometimes it brings several tracks with
+          //the same language but different labels, and Id also because sometimes it changes (especially text tracks)
+          self.updateChannelTrack(User.propChannelSubtitles, track.label);
+        } else {
+          self.$player.textTracks().tracks_[index].mode = "hidden";
+        }
+      });
+
+      this.$vodTracksDiv.find(".nb-vjs-track-subtitle").find("i").addClass("hidden");
+    } else {
+      //this.$player.audioTracks().tracks_.forEach(function (track, index) { if (track.enabled == true) { track.mode = false; } })
+      //this.$player.audioTracks().tracks_[index].enabled = true;
+      User.setPlayerAudioLang(null);
+      this.$player.audioTracks().tracks_.forEach(function (track, index) {
+        if (track.id == id) {
+          self.$player.audioTracks().tracks_[index].enabled = true;
+
+          //label saved instead of language because sometimes it brings several tracks with
+          //the same language but different labels, and Id also because sometimes it changes (especially text tracks)
+          self.updateChannelTrack(User.propChannelAudio, track.label);
+        } else {
+          self.$player.audioTracks().tracks_[index].enabled = false;
+        }
+      });
+
+      this.$vodTracksDiv.find(".nb-vjs-track-audio").find("i").addClass("hidden");
+    }
+
+    //if (!Device.isDEFAULT) { //reload player to fix issue when changing tracks and player freezes (only for TV's)
+    //  this.$player.load();
+    //}
+
+    $focused.find("i").removeClass("hidden");
   },
+
   setAudioByProperty: function (property, propertyValue) {
     var self = this;
 
